@@ -1,7 +1,7 @@
 {:aliases {:repl {:main-opts  ["-m" "cljdev.repl"]}}
  :paths ["src"]
- :deps {org.clojure/clojure {:mvn/version "1.10.0"}
+ :deps {org.clojure/clojure {:mvn/version "1.10.1"}
         com.bhauman/rebel-readline {:mvn/version "0.1.4"}
-        nrepl/nrepl {:mvn/version "0.7.0"}
-        cider/cider-nrepl {:mvn/version "0.24.0"}
-        org.clojure/tools.namespace {:mvn/version "0.2.11"}}}
+        nrepl/nrepl {:mvn/version "0.8.2"}
+        cider/cider-nrepl {:mvn/version "0.25.4"}
+        org.clojure/tools.namespace {:mvn/version "1.0.0"}}}
