@@ -4,10 +4,12 @@
     [clojure.java.io :as io]
     [nrepl.server :as nrepl-server]
     [clojure.core.server :as server]
+    [clojure.tools.namespace.repl :as namespace.repl]
 
     [cljdev.dev]
     [rebel-readline.clojure.main :as rebel-main]
-    [rebel-readline.core :as rebel-core]))
+    [rebel-readline.core :as rebel-core]
+    ))
 
 ; nREPL
 
@@ -50,6 +52,26 @@
 (defn stop-prepl!
   []
   (server/stop-server prepl-name))
+
+(def default-start
+  {:nrepl true
+   :prepl false
+   :start-ns 'dev
+   :refresh false})
+
+(defn start
+  [config]
+  (let [{:keys [nrepl prepl start-ns refresh]} (merge default-start config)]
+    (try (require start-ns) (catch Exception _e))
+    (when refresh
+      (namespace.repl/refresh))
+    (when nrepl (start-nrepl!))
+    (when prepl (start-prepl!))
+    (rebel-core/ensure-terminal
+      (rebel-main/repl :init (fn [] (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
+    (when nrepl (stop-nrepl!))
+    (when prepl (stop-prepl!))
+    (System/exit 0)))
 
 (defn -main [& args]
   (try (require '[dev]) (catch Exception e))
