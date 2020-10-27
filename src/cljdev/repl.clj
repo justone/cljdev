@@ -55,7 +55,7 @@
 
 (def default-start
   {:nrepl true
-   :prepl false
+   :prepl true
    :start-ns 'dev
    :refresh false})
 
@@ -73,8 +73,8 @@
     (when prepl (stop-prepl!))
     (System/exit 0)))
 
-(defn -main [& args]
-  (try (require '[dev]) (catch Exception e))
+(defn -main [& _args]
+  (try (require '[dev]) (catch Exception _e))
   (start-nrepl!)
   (start-prepl!)
   (rebel-core/ensure-terminal
