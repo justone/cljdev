@@ -11,7 +11,7 @@ then supports growing into a more capable of tools.
 Add this alias to your `deps.edn` file (either at project level or in `~/.clojure/deps.edn`):
 
 ```
-:repl {:extra-deps {io.github.justone/cljdev {:sha "b1956efcbafb5e1b5e0fc9bfb5715c25e9efae5e"}}
+:repl {:extra-deps {io.github.justone/cljdev {:sha "2611bdff249d72752ee86764a26af828f9fd7cb9"}}
        :main-opts  ["-m" "cljdev.repl"]
        :exec-fn cljdev.repl/start}
 ```
