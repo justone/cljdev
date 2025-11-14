@@ -69,8 +69,7 @@
     (when refresh
       (namespace.repl/refresh))
     (when watch-deps
-      (watch-deps/start! {:aliases watch-deps-aliases
-                          :include-local-roots? true}))
+      (watch-deps/start! {:aliases watch-deps-aliases}))
     (when nrepl (start-nrepl!))
     (when prepl (start-prepl!))
     (rebel-core/ensure-terminal
