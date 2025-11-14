@@ -5,6 +5,7 @@
     [nrepl.server :as nrepl-server]
     [clojure.core.server :as server]
     [clojure.tools.namespace.repl :as namespace.repl]
+    [lambdaisland.classpath.watch-deps :as watch-deps]
 
     [cljdev.dev]
     [rebel-readline.clojure.main :as rebel-main]
@@ -57,14 +58,19 @@
   {:nrepl true
    :prepl true
    :start-ns 'dev
-   :refresh false})
+   :refresh false
+   :watch-deps true
+   :watch-deps-aliases [:dev :test]})
 
 (defn start
   [config]
-  (let [{:keys [nrepl prepl start-ns refresh]} (merge default-start config)]
+  (let [{:keys [nrepl prepl start-ns refresh watch-deps watch-deps-aliases]} (merge default-start config)]
     (try (require start-ns) (catch Exception _e))
     (when refresh
       (namespace.repl/refresh))
+    (when watch-deps
+      (watch-deps/start! {:aliases watch-deps-aliases
+                          :include-local-roots? true}))
     (when nrepl (start-nrepl!))
     (when prepl (start-prepl!))
     (rebel-core/ensure-terminal

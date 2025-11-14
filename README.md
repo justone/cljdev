@@ -30,12 +30,14 @@ Note: this requires using version [`1.10.1.697`](https://clojure.org/releases/to
 
 Here are the options and their default values:
 
-| Option      | Description                      | Default |
-|-------------|----------------------------------|---------|
-| `:nrepl`    | Start nREPL server?              | true    |
-| `:prepl`    | Start pREPL server?              | true    |
-| `:start-ns` | Which namespace to start in?     | 'dev    |
-| `:refresh`  | Call c.t.n.r/refresh at startup? | false   |
+| Option                | Description                      | Default        |
+|-----------------------|----------------------------------|----------------|
+| `:nrepl`              | Start nREPL server?              | true           |
+| `:prepl`              | Start pREPL server?              | true           |
+| `:start-ns`           | Which namespace to start in?     | 'dev           |
+| `:refresh`            | Call c.t.n.r/refresh at startup? | false          |
+| `:watch-deps`         | Watch deps.edn for changes       | true           |
+| `:watch-deps-aliases` | Aliases in deps.edn to watch     | `[:dev :test]` |
 
 To override on the command line, add extra key/value pairs:
 
