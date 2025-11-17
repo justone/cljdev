@@ -3,7 +3,7 @@
  :deps {org.clojure/clojure {:mvn/version "1.12.3"}
         com.bhauman/rebel-readline {:mvn/version "0.1.5"}
         com.lambdaisland/classpath {:mvn/version "0.6.58"}
-        com.github.justone/aperture {:git/sha "1cdc9d74268675ce55d505d39dd5fff92db5a376"}
+        com.github.justone/aperture {:git/sha "d61e3346f6d025756dfcb15c144c8fd32c3b21ce"}
         nrepl/nrepl {:mvn/version "1.5.0"}
         cider/cider-nrepl {:mvn/version "0.58.0"}
         org.clojure/tools.namespace {:mvn/version "1.5.0"}}}
