@@ -8,6 +8,7 @@
     [lambdaisland.classpath.watch-deps :as watch-deps]
 
     [cljdev.dev]
+    [p]
     [rebel-readline.clojure.main :as rebel-main]
     [rebel-readline.core :as rebel-core]
     ))
@@ -60,11 +61,12 @@
    :start-ns 'dev
    :refresh false
    :watch-deps true
+   :portal true
    :watch-deps-aliases [:dev :test]})
 
 (defn start
   [config]
-  (let [{:keys [nrepl prepl start-ns refresh watch-deps watch-deps-aliases]} (merge default-start config)]
+  (let [{:keys [nrepl prepl start-ns refresh portal watch-deps watch-deps-aliases]} (merge default-start config)]
     (try (require start-ns) (catch Exception _e))
     (when refresh
       (namespace.repl/refresh))
@@ -72,6 +74,7 @@
       (watch-deps/start! {:aliases watch-deps-aliases}))
     (when nrepl (start-nrepl!))
     (when prepl (start-prepl!))
+    (when portal (p/open {:host "hoth.local" :port 9020}))
     (rebel-core/ensure-terminal
       (rebel-main/repl :init (fn [] (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
     (when nrepl (stop-nrepl!))
