@@ -74,7 +74,7 @@
       (watch-deps/start! {:aliases watch-deps-aliases}))
     (when nrepl (start-nrepl!))
     (when prepl (start-prepl!))
-    (when portal (p/open {:host "hoth.local" :port 9020}))
+    (when portal (p/open))
     (rebel-core/ensure-terminal
       (rebel-main/repl :init (fn [] (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
     (when nrepl (stop-nrepl!))
