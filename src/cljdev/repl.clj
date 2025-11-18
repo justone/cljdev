@@ -8,7 +8,7 @@
     [lambdaisland.classpath.watch-deps :as watch-deps]
 
     [cljdev.dev]
-    [p]
+    [aperture.core :as ap]
     [rebel-readline.clojure.main :as rebel-main]
     [rebel-readline.core :as rebel-core]
     ))
@@ -74,7 +74,7 @@
       (watch-deps/start! {:aliases watch-deps-aliases}))
     (when nrepl (start-nrepl!))
     (when prepl (start-prepl!))
-    (when portal (p/open))
+    (when portal (ap/open))
     (rebel-core/ensure-terminal
       (rebel-main/repl :init (fn [] (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
     (when nrepl (stop-nrepl!))
