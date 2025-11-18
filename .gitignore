@@ -1,2 +1,4 @@
 .cpcache/
 .rebel_readline_history
+target/
+.socket-port

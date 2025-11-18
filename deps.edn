@@ -1,4 +1,7 @@
-{:aliases {:repl {:main-opts  ["-m" "cljdev.repl"]}}
+{:aliases {:repl {:main-opts  ["-m" "cljdev.repl"]}
+           :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.11"}
+                          slipset/deps-deploy {:mvn/version "0.2.2"}}
+                   :ns-default build}}
  :paths ["src"]
  :deps {org.clojure/clojure {:mvn/version "1.12.3"}
         com.bhauman/rebel-readline {:mvn/version "0.1.5"}
