@@ -11,7 +11,7 @@
     [aperture.core :as ap]
     [rebel-readline.clojure.main :as rebel-main]
     [rebel-readline.core :as rebel-core]
-    ))
+    [scribe.config :as config]))
 
 ; nREPL
 
@@ -61,12 +61,16 @@
    :start-ns 'dev
    :refresh false
    :watch-deps true
+   :watch-deps/aliases [:dev :test]
    :portal true
-   :watch-deps-aliases [:dev :test]})
+   :portal/config nil})
 
 (defn start
   [config]
-  (let [{:keys [nrepl prepl start-ns refresh portal watch-deps watch-deps-aliases]} (merge default-start config)]
+  (let [final-config (merge default-start (config/load-config "cljdev") config)
+        {:keys [nrepl prepl start-ns refresh portal watch-deps]
+         watch-deps-aliases :watch-deps/aliases
+         portal-config :portal/config} final-config]
     (try (require start-ns) (catch Exception _e))
     (when refresh
       (namespace.repl/refresh))
@@ -74,7 +78,7 @@
       (watch-deps/start! {:aliases watch-deps-aliases}))
     (when nrepl (start-nrepl!))
     (when prepl (start-prepl!))
-    (when portal (ap/open))
+    (when portal (ap/open portal-config))
     (rebel-core/ensure-terminal
       (rebel-main/repl :init (fn [] (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
     (when nrepl (stop-nrepl!))

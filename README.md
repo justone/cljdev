@@ -11,20 +11,17 @@ then supports growing into a more capable of tools.
 Add this alias to your `deps.edn` file (either at project level or in `~/.clojure/deps.edn`):
 
 ```
-:repl {:extra-deps {io.github.justone/cljdev {:sha "2611bdff249d72752ee86764a26af828f9fd7cb9"}}
-       :main-opts  ["-m" "cljdev.repl"]
+:repl {:extra-deps {org.endot/cljdev {:mvn/version "0.0.1-SNAPSHOT"}}
        :exec-fn cljdev.repl/start}
 ```
 
-# Usage
+## Usage
 
-Start with `-M` for default behavior. This will start an nREPL and pREPL server.
+Start with `-X:repl` for default behavior. This will start an nREPL and pREPL server, as well as automatic deps.edn watching and a Portal window.
 
 ```
-clojure -M:repl
+clojure -X:repl
 ```
-
-## Customizing with `-X`
 
 Note: this requires using version [`1.10.1.697`](https://clojure.org/releases/tools#v1.10.1.697) or later.
 
@@ -37,7 +34,9 @@ Here are the options and their default values:
 | `:start-ns`           | Which namespace to start in?     | 'dev           |
 | `:refresh`            | Call c.t.n.r/refresh at startup? | false          |
 | `:watch-deps`         | Watch deps.edn for changes       | true           |
-| `:watch-deps-aliases` | Aliases in deps.edn to watch     | `[:dev :test]` |
+| `:watch-deps/aliases` | Aliases in deps.edn to watch     | `[:dev :test]` |
+| `:portal`             | Launch a Portal viewer           | true           |
+| `:portal/config`      | Portal config                    | nil            |
 
 To override on the command line, add extra key/value pairs:
 
@@ -51,3 +50,11 @@ Or, to override for the project, add an `:exec-args` key to the alias:
 :exec-args {:prepl false
             :refresh true}
 ```
+
+It is also possible to set options by creating a `cljdev.edn` file in $XDG_CONFIG_HOME (usually `~/.config/`) containing a map of options with above keys. Project-specific configuration can be put in `.cljdev.edn` or `.cljdev.local.edn` and will be merged in the following order:
+
+1. Defaults (specified above)
+2. XDG config
+3. Project-specific files
+4. `:exec-args` values
+5. Command line flags
