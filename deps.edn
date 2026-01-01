@@ -1,13 +1,13 @@
 {:aliases {:repl {:main-opts  ["-m" "cljdev.repl"]}
            :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.11"}
                           slipset/deps-deploy {:mvn/version "0.2.2"}}
-                   :ns-default build}}
+                   :ns-default build}
+           :full {:extra-deps {com.lambdaisland/classpath {:mvn/version "0.6.58"}
+                               org.endot/aperture {:mvn/version "0.0.1-SNAPSHOT"}}}}
  :paths ["src"]
  :deps {org.clojure/clojure {:mvn/version "1.12.3"}
         com.bhauman/rebel-readline {:mvn/version "0.1.5"}
-        com.lambdaisland/classpath {:mvn/version "0.6.58"}
         nrepl/nrepl {:mvn/version "1.5.0"}
         cider/cider-nrepl {:mvn/version "0.58.0"}
         org.clojure/tools.namespace {:mvn/version "1.5.0"}
-        org.endot/aperture {:mvn/version "0.0.1-SNAPSHOT"}
         org.endot/scribe {:mvn/version "1.1.0-SNAPSHOT"}}}
