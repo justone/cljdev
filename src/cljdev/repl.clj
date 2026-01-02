@@ -103,25 +103,25 @@
 
 (defn start
   [config]
-  (binding [*repl* true]
-    (let [final-config (merge default-config (config/load-config "cljdev") config)
-          {:keys [start-ns refresh]} final-config]
-      (try (require start-ns) (catch Exception _e))
-      (when refresh
-        (namespace.repl/refresh))
-      (launch :nrepl final-config)
-      (launch :prepl final-config)
-      (rebel-core/ensure-terminal
-        (rebel-main/repl
-          :init
-          (fn []
-            ;; Need to launch these here so that the classloader is dynamic
-            (launch :watch-deps final-config)
-            (launch :portal final-config)
-            (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
-      (shutdown :nrepl final-config)
-      (shutdown :prepl final-config)
-      (System/exit 0))))
+  (let [final-config (merge default-config (config/load-config "cljdev") config)
+        {:keys [start-ns refresh]} final-config]
+    (try (require start-ns) (catch Exception _e))
+    (when refresh
+      (namespace.repl/refresh))
+    (launch :nrepl final-config)
+    (launch :prepl final-config)
+    (rebel-core/ensure-terminal
+      (rebel-main/repl
+        :init
+        (fn []
+          ;; Need to launch these here so that the classloader is
+          ;; dynamic and *repl* is true (needed for add-lib)
+          (launch :watch-deps final-config)
+          (launch :portal final-config)
+          (in-ns (if (find-ns start-ns) start-ns 'cljdev.dev)))))
+    (shutdown :nrepl final-config)
+    (shutdown :prepl final-config)
+    (System/exit 0)))
 
 (defn -main [& _args]
   (let [config {:nrepl true :prepl true}]
