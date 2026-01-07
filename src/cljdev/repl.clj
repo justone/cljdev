@@ -33,7 +33,7 @@
       (println "aperture: require")
       (rdep/add-lib 'org.endot/aperture {:mvn/version "0.0.1-SNAPSHOT"})
       (println "aperture: opening portal")
-      ((requiring-resolve 'aperture.core/open) portal-config)
+      ((requiring-resolve 'aperture.core/open) (merge {:window-title (System/getProperty "user.dir")} portal-config))
       (println "aperture: portal launch complete"))))
 
 (defmethod launch :watch-deps
